@@ -23,10 +23,23 @@ var blogSchema = new mongoose.Schema({
 var Blog = mongoose.model("Blog",blogSchema);
 Blog.create({
     title:"test",
-    image:"",
+    image:"https://images.unsplash.com/photo-1508814437933-f0c7d18a9217?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b7c9c7524911773eb70987b911888517&auto=format&fit=crop&w=750&q=80",
     body:"first"
 })
+app.get("/",(req,res)=>{
+    res.redirect("/blogs");
+})
 
+app.get("/blogs",(req,res)=>{
+    Blog.find({},function(error,blogs){
+        if(error){
+            console.log(error);    
+        }
+        else{
+            res.render("index",{blogs:blogs})
+        }    
+    })
+})
 
 app.listen("3000",(req,res)=>{
     console.log("server connected");
